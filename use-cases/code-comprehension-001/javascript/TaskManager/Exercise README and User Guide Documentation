@@ -1,0 +1,612 @@
+# README and User Guide Documentation Exercise
+
+## Selected Project
+
+I chose to document the TaskCLI project a command line task management tool for developers. This project has clear features and would be useful for developers who prefer working in the terminal.
+
+## Prompt 1: Comprehensive README File
+
+# TaskCLI
+
+A simple command-line task management tool for developers who like to stay in the terminal.
+
+## What It Does
+
+TaskCLI helps you manage tasks without leaving your command line. You can create tasks, organize them into projects, set priorities, and track your progress.
+
+## Key Features
+
+- Create and manage tasks from the terminal
+- Organize tasks into projects and tags  
+- Set priorities and due dates
+- Track time spent on tasks
+- Get daily email summaries
+- Connect with GitHub issues
+- Generate time reports
+
+## What You Need
+
+- Node.js 10 or higher
+- npm package manager
+
+## How to Install
+
+Install it globally with npm:
+
+```bash
+npm install -g task-cli
+```
+
+Check if it worked:
+
+```bash
+taskcli --version
+```
+
+## Basic Setup
+
+Run this first to set up your preferences:
+
+```bash
+taskcli init
+```
+
+Set your email for notifications:
+
+```bash
+taskcli config set email your.email@example.com
+```
+
+## How to Use
+
+### Creating Tasks
+
+Make a new task:
+
+```bash
+taskcli add "Fix the login bug"
+```
+
+Add a task with a due date:
+
+```bash
+taskcli add "Write documentation" --due 2024-01-15
+```
+
+### Viewing Tasks
+
+See all your tasks:
+
+```bash
+taskcli list
+```
+
+See tasks for a specific project:
+
+```bash
+taskcli list --project "Website"
+```
+
+### Completing Tasks
+
+Mark task as done:
+
+```bash
+taskcli complete 5
+```
+
+### Working with Projects
+
+Create a new project:
+
+```bash
+taskcli project add "Mobile App"
+```
+
+Add task to a project:
+
+```bash
+taskcli add "Design login screen" --project "Mobile App"
+```
+
+### Using Tags
+
+Add tags when creating tasks:
+
+```bash
+taskcli add "Fix urgent bug" --tags urgent frontend
+```
+
+Find tasks by tags:
+
+```bash
+taskcli list --tags urgent
+```
+
+### Time Tracking
+
+Start timer for a task:
+
+```bash
+taskcli timer start 5
+```
+
+Stop the timer:
+
+```bash
+taskcli timer stop
+```
+
+See time report:
+
+```bash
+taskcli report time --from 2024-01-01
+```
+
+## Common Problems
+
+### Command Not Found
+
+If you get "command not found", your npm global folder might not be in your PATH. Check with:
+
+```bash
+npm bin -g
+```
+
+Add that folder to your PATH environment variable.
+
+### Email Not Working
+
+Check your email settings:
+
+```bash
+taskcli config list
+```
+
+Test email:
+
+```bash
+taskcli email:test
+```
+
+### Database Issues
+
+If tasks disappear or you get database errors, reset it:
+
+```bash
+taskcli db:reset
+```
+
+## Getting Help
+
+- Use `taskcli --help` for command help
+- Use `taskcli [command] --help` for specific command help
+- Check the GitHub repository for issues
+
+## Contributing
+
+Want to help improve TaskCLI? Fork the repository and submit pull requests. We welcome bug fixes and new features.
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Prompt 2: Step-by-Step Guide for GitHub Integration
+
+# How to Connect TaskCLI with GitHub
+
+This guide shows you how to link your tasks with GitHub issues so you can manage everything from the command line.
+
+## What You Need First
+
+- TaskCLI installed and working
+- A GitHub account
+- Access to the repositories you want to connect
+
+## Step 1: Get a GitHub Token
+
+Go to GitHub and create a personal access token:
+
+1. Login to GitHub
+2. Click your profile picture → Settings
+3. Go to Developer settings → Personal access tokens
+4. Click "Generate new token"
+5. Name it something like "TaskCLI Integration"
+6. Check these permissions:
+   - repo (full repository access)
+   - read:user (read user info)
+7. Click "Generate token"
+8. Copy the token right away - GitHub only shows it once
+
+## Step 2: Add Token to TaskCLI
+
+Put your token in TaskCLI:
+
+```bash
+taskcli config set githubToken your-token-here
+```
+
+Check it worked:
+
+```bash
+taskcli config list
+```
+
+You should see your token (partially hidden) in the list.
+
+## Step 3: Connect a Project to a Repository
+
+Create or use an existing project:
+
+```bash
+taskcli project add "Website Frontend"
+```
+
+Link it to your GitHub repo:
+
+```bash
+taskcli project link "Website Frontend" --repo "yourname/yourrepo"
+```
+
+Make sure it worked:
+
+```bash
+taskcli project show "Website Frontend"
+```
+
+## Step 4: Link Tasks to Issues
+
+### Import an Issue as a Task
+
+Turn a GitHub issue into a task:
+
+```bash
+taskcli github import --repo "yourname/yourrepo" --issue 15
+```
+
+### Create Task and Link to Issue
+
+Make a new task connected to an issue:
+
+```bash
+taskcli add "Fix navigation" --github-issue 15
+```
+
+### Link Existing Task to Issue
+
+Connect a task you already have:
+
+```bash
+taskcli link 8 --github-issue 15
+```
+
+## Step 5: Keep Everything in Sync
+
+Update tasks from GitHub:
+
+```bash
+taskcli github sync
+```
+
+Complete a task and close the GitHub issue:
+
+```bash
+taskcli complete 8 --push-github
+```
+
+See GitHub info for a task:
+
+```bash
+taskcli show 8 --github-details
+```
+
+## Common Problems
+
+### Authentication Failed
+
+If you get authentication errors:
+
+- Check your token is still valid
+- Make sure it has the right permissions
+- Try creating a new token
+
+### Repository Not Found
+
+If it says repository not found:
+
+- Check the repo name is correct (username/reponame)
+- Make sure you have access to the repo
+- Verify your token works with that repo
+
+### Sync Not Working
+
+If changes don't sync:
+
+- Try `taskcli github sync --force`
+- Check your internet connection
+- Look for error messages with `taskcli log show`
+
+## What's Next
+
+Now you can:
+
+- Set up automatic daily syncs
+- Create tasks from new GitHub issues
+- Track time on issues
+- Generate reports that include GitHub data
+
+## Prompt 3: FAQ Document
+
+# TaskCLI Frequently Asked Questions
+
+## Getting Started Questions
+
+### What is TaskCLI?
+
+TaskCLI is a command-line tool that helps developers manage tasks without leaving the terminal. It's like a todo app but designed for people who spend lots of time in the command line.
+
+### How do I install it?
+
+Run this command:
+
+```bash
+npm install -g task-cli
+```
+
+You need Node.js installed first.
+
+### Do I need to know a lot about command lines?
+
+Not really. If you can use basic commands like `cd` and `ls`, you can use TaskCLI. The commands are simple and there's help available.
+
+### How do I get started?
+
+After installing, run:
+
+```bash
+taskcli init
+taskcli add "My first task"
+taskcli list
+```
+
+## Using Tasks
+
+### How do I create a task?
+
+Use the add command:
+
+```bash
+taskcli add "Write documentation"
+```
+
+### How do I see my tasks?
+
+Use the list command:
+
+```bash
+taskcli list
+```
+
+### How do I finish a task?
+
+Use the complete command with the task number:
+
+```bash
+taskcli complete 5
+```
+
+### Can I edit a task after creating it?
+
+Yes, use the update command:
+
+```bash
+taskcli update 5 --title "New title"
+```
+
+### How do I delete a task I don't need?
+
+Use the delete command:
+
+```bash
+taskcli delete 5
+```
+
+## Projects and Organization
+
+### What are projects for?
+
+Projects help group related tasks together. Like having folders for your tasks.
+
+### How do I make a project?
+
+Use the project add command:
+
+```bash
+taskcli project add "Website Redesign"
+```
+
+### How do I put a task in a project?
+
+When creating the task:
+
+```bash
+taskcli add "Design homepage" --project "Website Redesign"
+```
+
+Or move an existing task:
+
+```bash
+taskcli update 5 --project "Website Redesign"
+```
+
+### What are tags?
+
+Tags are labels you can put on tasks to organize them in different ways. Like "urgent" or "frontend".
+
+### How do I use tags?
+
+Add them when creating tasks:
+
+```bash
+taskcli add "Fix bug" --tags urgent backend
+```
+
+Or add them later:
+
+```bash
+taskcli tag 5 --add urgent
+```
+
+## Time Tracking
+
+### Can I track how long tasks take?
+
+Yes, start a timer when you begin working:
+
+```bash
+taskcli timer start 5
+```
+
+Stop it when you're done:
+
+```bash
+taskcli timer stop
+```
+
+### What if I forget to start the timer?
+
+You can add time manually:
+
+```bash
+taskcli timer add 5 --minutes 60
+```
+
+### How do I see time reports?
+
+Use the report command:
+
+```bash
+taskcli report time
+```
+
+## GitHub Integration
+
+### Can I connect TaskCLI to GitHub?
+
+Yes, you need to set up a GitHub token first:
+
+```bash
+taskcli config set githubToken your-token
+```
+
+### Can I turn GitHub issues into tasks?
+
+Yes, import them:
+
+```bash
+taskcli github import --repo "yourname/repo" --issue 10
+```
+
+### Will completing a task close the GitHub issue?
+
+Only if you tell it to:
+
+```bash
+taskcli complete 5 --push-github
+```
+
+## Common Problems
+
+### The taskcli command doesn't work
+
+This usually means npm's global folder isn't in your PATH. Check with your system administrator or look up how to add npm's global bin folder to your PATH.
+
+### My tasks disappeared
+
+Try resetting the database:
+
+```bash
+taskcli db:reset
+```
+
+This fixes database issues but keeps your tasks.
+
+### Email notifications aren't working
+
+Check your email settings:
+
+```bash
+taskcli config list
+```
+
+Make sure your email is set correctly.
+
+### I can't remember a command
+
+Use help:
+
+```bash
+taskcli --help
+taskcli add --help
+```
+
+### How do I remove TaskCLI completely?
+
+Uninstall it:
+
+```bash
+npm uninstall -g task-cli
+```
+
+Then delete the data folder at `~/.taskcli/`
+
+## Advanced Questions
+
+### Can I backup my tasks?
+
+Yes, export them:
+
+```bash
+taskcli export --output backup.json
+```
+
+Import them later:
+
+```bash
+taskcli import backup.json
+```
+
+### Can I use TaskCLI on multiple computers?
+
+Yes, but you'll need to set up sync or manually export/import your tasks.
+
+### Is there a web interface?
+
+No, TaskCLI is designed to work only in the terminal. That's what makes it fast and simple.
+
+### Can I create repeating tasks?
+
+Yes, use the recurring flag:
+
+```bash
+taskcli add "Weekly report" --recurring weekly
+```
+
+## Exercise Reflection
+
+**Most Challenging Parts**: Writing clear installation instructions was hard because different systems work differently. Also explaining the GitHub integration without making it sound too complicated.
+
+**Prompt Adjustments**: I found that asking for simpler language and more examples helped a lot. Also being specific about the target audience (developers who use command line tools) made the responses better.
+
+**Document Structure**: I learned that FAQs work best when organized by what people actually want to do, not by technical features. Starting with basic questions and moving to advanced ones helps users find what they need.
+
+**Workflow Integration**: This approach would work well for any project. Writing documentation this way helps you think about what users really need to know, not just what the code does. I would use this for README files, setup guides, and help documentation.
+
+## What I Created
+
+1. **Project Choice**: TaskCLI command-line task management tool
+2. **README File**: Complete setup and usage guide with examples
+3. **Step-by-Step Guide**: How to set up GitHub integration with troubleshooting
+4. **FAQ Document**: Common questions organized by user goals, not features
+
+The documentation covers everything a developer would need to start using the tool effectively, with simple language and practical examples.
